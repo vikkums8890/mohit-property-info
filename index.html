@@ -138,11 +138,11 @@
       </section>
       <section class="visit-section" id="visit">
         <div class="visit-intro">
-          <p class="eyebrow">SITE VISIT REQUEST</p>
-          <h2>अपना preferred visit slot भेजें</h2>
+          <p class="eyebrow">SCHEDULE REQUEST</p>
+          <h2>Visit, online meeting या callback schedule करें</h2>
           <p>
-            यह visit request है. Pankaj Rajput उपलब्धता check करके WhatsApp या phone पर confirmation
-            देंगे.
+            अपनी जरूरत और preferred slot भेजें. Request CRM में track होगी और assigned team member
+            confirmation के लिए आपसे संपर्क करेंगे.
           </p>
           <div class="hours">
             <b>Visit & call hours</b><span>Monday–Saturday</span><strong>10:00 AM–6:30 PM</strong
@@ -159,20 +159,26 @@
               autocomplete="tel"
               pattern="[0-9 +()-]{10,16}" /></label
           ><label
-            >Property<select name="propertyId" required>
+            >Request type<select name="requestType" required>
+              <option value="site-visit">Property site visit</option>
+              <option value="architecture-meeting">Online architecture meeting</option>
+              <option value="callback">Scheduled callback</option>
+            </select></label
+          ><label
+            id="property-field">Property<select name="propertyId" required>
               <option value="">Select करें</option>
               <option value="property-bhatagaon">Bhatagaon Flats</option>
               <option value="property-amleshwar">Amleshwar Plots</option>
             </select></label
-          ><label>Requirement<input name="requirement" placeholder="जैसे 2BHK या plot" /></label
-          ><label>Approx. budget<input name="budget" placeholder="जैसे ₹12 lakh" /></label
-          ><label
+          ><label>Requirement / discussion topic<input name="requirement" placeholder="अपनी जरूरत संक्षेप में लिखें" /></label
+          ><label id="budget-field">Approx. budget<input name="budget" placeholder="जैसे ₹12 lakh" /></label
+          ><label id="purpose-field"
             >Purpose<select name="purpose">
               <option value="">Select करें</option>
               <option>Self-use</option>
               <option>Investment</option>
             </select></label
-          ><label
+          ><label id="finance-field"
             >Finance<select name="finance">
               <option value="">Select करें</option>
               <option>Loan चाहिए</option>
@@ -181,13 +187,13 @@
             </select></label
           ><label
             >Preferred date & time<input name="preferredAt" type="datetime-local" required /></label
-          ><label>Visitors<input name="visitors" type="number" min="1" max="10" value="1" /></label
+          ><label id="visitors-field">Visitors<input name="visitors" type="number" min="1" max="10" value="1" /></label
           ><label class="trap" aria-hidden="true"
             >Website<input name="website" tabindex="-1" autocomplete="off" /></label
-          ><button class="btn primary" type="submit">Visit request भेजें</button>
+          ><button class="btn primary" type="submit">Schedule request भेजें</button>
           <p class="form-note">
-            Submit करके आप visit coordination के लिए Mohit Solanki और assigned staff से संपर्क की
-            अनुमति देते हैं.
+            Submit करके आप इस request के follow-up के लिए Mohit Solanki या assigned staff से संपर्क
+            की अनुमति देते हैं.
           </p>
           <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
         </form>
@@ -214,9 +220,23 @@
         .slice(0, 16);
       document.querySelectorAll("[data-property]").forEach((link) =>
         link.addEventListener("click", () => {
+          form.elements.requestType.value = "site-visit";
           form.elements.propertyId.value = link.dataset.property;
+          updateRequestFields();
         }),
       );
+      function updateRequestFields() {
+        const isVisit = form.elements.requestType.value === "site-visit";
+        ["property-field", "budget-field", "purpose-field", "finance-field", "visitors-field"].forEach(
+          (id) => {
+            document.querySelector(`#${id}`).hidden = !isVisit;
+          },
+        );
+        form.elements.propertyId.required = isVisit;
+        if (!isVisit) form.elements.propertyId.value = "";
+      }
+      form.elements.requestType.addEventListener("change", updateRequestFields);
+      updateRequestFields();
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const button = form.querySelector("button");
@@ -238,15 +258,16 @@
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || "Request save नहीं हुई.");
           statusBox.className = "form-status success";
-          statusBox.innerHTML = `<strong>Visit request received and tracking started.</strong><br>Request ID: ${data.requestId}. Pankaj Rajput उपलब्धता check करके आपके दिए गए number पर slot confirm करेंगे.`;
+          statusBox.innerHTML = `<strong>Schedule request received and tracking started.</strong><br>Request ID: ${data.requestId}. ${data.assignee} आपके दिए गए number पर slot confirm करेंगे.`;
           form.reset();
+          updateRequestFields();
         } catch (error) {
           statusBox.className = "form-status error";
           statusBox.textContent =
             error.message + " जरूरत हो तो WhatsApp 9691062422 पर message करें.";
         } finally {
           button.disabled = false;
-          button.textContent = "Visit request भेजें";
+          button.textContent = "Schedule request भेजें";
         }
       });
     </script>
