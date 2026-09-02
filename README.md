@@ -1,6 +1,6 @@
-# Mohit Property — Public Information Site
+# Mohit Solanki — Public Information Site
 
-Official public information and site-visit request page for Mohit Property in Raipur, Chhattisgarh.
+Official public information and site-visit request page for Mohit Solanki in Raipur, Chhattisgarh.
 
 Live URL after GitHub Pages deployment: `https://vikkums8890.github.io/mohit-property-info/`
 
