@@ -1,6 +1,6 @@
 # Mohit Property — Public Information Site
 
-Official public information page for Mohit Property, operated under UK Concept Designer in Raipur, Chhattisgarh.
+Official public information and site-visit request page for Mohit Property in Raipur, Chhattisgarh.
 
 Live URL after GitHub Pages deployment: `https://vikkums8890.github.io/mohit-property-info/`
 
