@@ -1,7 +1,7 @@
-# Mohit Solanki — Public Information Site
+# SolankiGroup — Client Scheduling Site
 
-Official public information and site-visit request page for Mohit Solanki in Raipur, Chhattisgarh.
+Official client-facing property visit, online architecture meeting and callback request page for SolankiGroup by Mohit Solanki.
 
-Live URL after GitHub Pages deployment: `https://vikkums8890.github.io/mohit-property-info/`
+Live URL after GitHub Pages deployment: `https://vikkums8890.github.io/solankigroup/`
 
 This repository contains only public property information. The private CRM, lead data and automation credentials are not included.
