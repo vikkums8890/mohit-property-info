@@ -132,7 +132,7 @@
           <div>
             <span>3</span>
             <h3>Team confirmation</h3>
-            <p>Pankaj Rajput slot confirm करके visit coordinate करेंगे.</p>
+            <p>Our Team slot confirm करके visit coordinate करेगी.</p>
           </div>
         </div>
       </section>
@@ -258,7 +258,10 @@
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || "Request save नहीं हुई.");
           statusBox.className = "form-status success";
-          statusBox.innerHTML = `<strong>Schedule request received and tracking started.</strong><br>Request ID: ${data.requestId}. ${data.assignee} आपके दिए गए number पर slot confirm करेंगे.`;
+          statusBox.replaceChildren();
+          const heading = document.createElement('strong');
+          heading.textContent = 'Schedule request received and tracking started.';
+          statusBox.append(heading, document.createElement('br'), `Request ID: ${data.requestId}. Our Team आपके दिए गए number पर slot confirm करेगी.`);
           form.reset();
           updateRequestFields();
         } catch (error) {
